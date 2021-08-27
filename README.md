@@ -1,6 +1,4 @@
-### Hi there, I'm Tamal - aka #zErO 👋
-
-<br />
+### Hi there, I'm Tamal 👋
 
 ## I'm a Designer, Developer, and Gamer!!
 
