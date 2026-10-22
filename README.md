@@ -8,11 +8,6 @@
 - 🥅 2021 Goals: Competitive Programminnggg !!
 - ⚡ Fun fact: I love to play FPS games :)
 
-### Connect with me:
-
-[<img align="left" alt="Abhishek Naidu | Twitter" width="22px" src="https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/twitter.svg" />][twitter]
-[<img align="left" alt="Abhishek's LinkedIN" width="22px" src="https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/linkedin.svg" />][linkedin]
-
 <br />
 
 ### Languages and Tools:
