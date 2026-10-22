@@ -1,20 +1,21 @@
-name: Refresh cat card
+name: Refresh passport
 
 on:
   schedule:
-    # every night at 04:17 UTC — a cat should keep odd hours
+    # every night at 04:17 UTC — passports get a new stamp
     - cron: "17 4 * * *"
   workflow_dispatch:
   push:
     branches: [master]
     paths:
-      - "scripts/generate_cat.py"
+      - "scripts/generate_passport.py"
+      - "popcat.txt"
 
 permissions:
   contents: write
 
 concurrency:
-  group: refresh-cat
+  group: refresh-passport
   cancel-in-progress: true
 
 jobs:
@@ -29,19 +30,19 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Draw today's cat
-        run: python scripts/generate_cat.py
+      - name: Stamp today's passport
+        run: python scripts/generate_passport.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit if the cat changed
+      - name: Commit if the passport changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- assets/cat.svg; then
-            echo "cat is already up to date"
+          if git diff --quiet -- README.md; then
+            echo "passport is already up to date"
             exit 0
           fi
-          git add assets/cat.svg
-          git commit -m "chore: feed the cat [skip ci]"
+          git add README.md
+          git commit -m "chore: stamp passport [skip ci]"
           git push
