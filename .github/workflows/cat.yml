@@ -1,0 +1,47 @@
+name: Refresh cat card
+
+on:
+  schedule:
+    # every night at 04:17 UTC — a cat should keep odd hours
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "scripts/generate_cat.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-cat
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Draw today's cat
+        run: python scripts/generate_cat.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit if the cat changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- assets/cat.svg; then
+            echo "cat is already up to date"
+            exit 0
+          fi
+          git add assets/cat.svg
+          git commit -m "chore: feed the cat [skip ci]"
+          git push
